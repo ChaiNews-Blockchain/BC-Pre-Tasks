@@ -1,13 +1,14 @@
-## BC-Pre-Tasks
-
+# BC-Pre-Tasks
 *pre-development preparation phase tasks*
 
-# How it works
 
-- Every week we will have new tasks to do
-- Just read the related docs and do your work
-- Before starting task, you have to create your own branch
-- When you done with the task, push your work on your branch
-- If you get stuck, you can create a new issue to request assistment
-- For questions, please contact us via Whatsapp group
-- Have a nice working 👍
+
+## Task #1
+
+- Create a mapping which includes users wallet addresses and their login counts
+- Then, read the login counts for each address from the mapping
+- Finally push your work to your branch
+---
+- Kullanıcı cüzdan adreslerini ve giriş sayılarını tutan bir mapping oluşturun
+- Ardından, mappingten her adres için giriş sayılarını okuyun
+- Son olaraki kodlarınızı kendi branchinize pushlayın
