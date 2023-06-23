@@ -1,14 +1,14 @@
 # BC-Pre-Tasks
-*pre-development preparation phase tasks*
+*please push your work in a folder named with task name eg. Task #1*
 
+*lütfen pushladığınız çalışmayı task ismiyle aynı bir klasörde gönderin örn: Task #1*
+
+---
 
 
 ## Task #1
 
-- Create a mapping which includes users wallet addresses and their login counts
-- Then, read the login counts for each address from the mapping
-- Finally push your work to your branch
----
-- Kullanıcı cüzdan adreslerini ve giriş sayılarını tutan bir mapping oluşturun
-- Ardından, mappingten her adres için giriş sayılarını okuyun
-- Son olaraki kodlarınızı kendi branchinize pushlayın
+
+- [ ] Kullanıcı cüzdan adreslerini ve giriş sayılarını tutan bir mapping oluşturun
+- [ ] Ardından, mappingten her adres için giriş sayılarını okuyun
+- [ ] Son olaraki kodlarınızı kendi branchinize pushlayın
