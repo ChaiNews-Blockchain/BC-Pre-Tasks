@@ -5,40 +5,59 @@ pragma solidity ^0.8.18;
 contract ApartmanYonetTask2 {
 
     address public administor;
+    uint public aidatmiktar;
+    uint public kasaMiktar;
+
     constructor() {
         administor = msg.sender;
     }
+
     struct aidat {
         uint payAmount;
         uint payDate;
-        bool isPaid;
     }
 
     event rentPaid(address indexed resident, uint rent);
     event rentWithdraw(address indexed resident, uint rent);
 
-    mapping(address => aidat) payList;
+    mapping(address => aidat[]) payList;
+
+    function setAidatMiktar(uint _miktar) public onlyAdministor{
+        aidatmiktar = _miktar;
+    }
 
     function odemeYap() public payable {
-        require(!payList[msg.sender].isPaid, "Already paid.");
+        require(msg.value == aidatmiktar, "Lutfen dogru miktarda odeme yapin.");
+        
+        uint miktar = msg.value;        uint payDate = block.timestamp;    kasaMiktar += miktar;
 
-        uint miktar = msg.value;
-        payList[msg.sender] = aidat(miktar, block.timestamp, true);
+        aidat memory newPayment = aidat(miktar, payDate);
+        payList[msg.sender].push(newPayment);
+        
         emit rentPaid(msg.sender, miktar);
     }
+
     function sonOdemeTarihiniSorgula(address _res) public view returns (uint) {
-        return payList[_res].payDate;
+    require(_res != address(0), "Boyle bir adres bulunamadi.");
+    
+    uint numberOfPayments = payList[_res].length;
+        if (numberOfPayments > 0) {
+            aidat[] storage payments = payList[_res];
+
+            return payments[numberOfPayments - 1].payDate;
+        } else {
+            revert("Odeme yapilmadi");
+        }
     }
 
     function birikenAidatlariCek() public onlyAdministor {
 
-        require(payList[msg.sender].isPaid, "Not paid yet.");
+        require(kasaMiktar < 0, "Odeme yapilmadi.");
 
-        uint miktar = payList[msg.sender].payAmount;
-        payList[msg.sender].payAmount = 0;
 
-        emit rentWithdraw(msg.sender, miktar);
-        payable(msg.sender).transfer(miktar);
+        emit rentWithdraw(msg.sender, kasaMiktar);
+        payable(msg.sender).transfer(kasaMiktar);
+        kasaMiktar = 0 ;
     }
 
     modifier onlyAdministor() {
