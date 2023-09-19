@@ -1,20 +1,16 @@
 const { ethers } = require("hardhat")
 
 async function main() {
-  
     const token = await ethers.getContractFactory("DemoToken")
     const Token = await token.deploy()
-    // const airdrop = await ethers.getContractFactory("Airdrop",[])
-    // const Airdrop = await token.deploy()
-
     await Token.deployed().then(async()=>{
-        const address = Token.address
-        const airdrop = await ethers.getContractFactory("Airdrop")
-        const Airdrop = await airdrop.deploy(address)
-        await Airdrop.deployed()
-        console.log(`Airdrop deployed to : ${Airdrop.address}`)
+        const address = Token.address 
+        const dapp = await ethers.getContractFactory("ChainewsDapp")
+        const Dapp = await dapp.deploy(address)
+        await Dapp.deployed()
+        console.log(`Dapp deployed to: ${Dapp.address}`)
     })
-    console.log(`Token deployed to: "${Token.address}"`)
+    console.log(`Token deployed to: ${Token.address}`)
 }
 
 const runMain = async () => {

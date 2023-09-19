@@ -13,6 +13,7 @@ contract Airdrop is Ownable {
     
     constructor(address _tokenAddr) {
         tokenAddr = _tokenAddr;
+        transferOwnership(msg.sender);
     }
 
     function batchDropTokens(address[] memory _recipients, uint256[] memory _amount) public onlyOwner returns (bool) {
