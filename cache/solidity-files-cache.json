@@ -518,8 +518,8 @@
       ]
     },
     "C:\\Users\\Mami\\BC-Pre-Tasks\\Contracts\\ChainewsDapp.sol": {
-      "lastModificationDate": 1695149220494,
-      "contentHash": "ff1c91ae31d1de969cd29842a06c8956",
+      "lastModificationDate": 1695150067560,
+      "contentHash": "e6e769bf1df68c47e19c108d3c2b3e58",
       "sourceName": "Contracts/ChainewsDapp.sol",
       "solcConfig": {
         "version": "0.8.9",
