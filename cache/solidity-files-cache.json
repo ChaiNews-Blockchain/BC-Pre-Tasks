@@ -82,7 +82,7 @@
       ]
     },
     "C:\\Users\\Mami\\BC-Pre-Tasks\\node_modules\\@openzeppelin\\contracts\\access\\Ownable.sol": {
-      "lastModificationDate": 1693321893091,
+      "lastModificationDate": 1695303913520,
       "contentHash": "5a20b2cad87ddb61c7a3a6af21289e28",
       "sourceName": "@openzeppelin/contracts/access/Ownable.sol",
       "solcConfig": {
@@ -119,7 +119,7 @@
       ]
     },
     "C:\\Users\\Mami\\BC-Pre-Tasks\\node_modules\\@openzeppelin\\contracts\\token\\ERC20\\ERC20.sol": {
-      "lastModificationDate": 1693321892666,
+      "lastModificationDate": 1695303913170,
       "contentHash": "3ae5166c6827a9cf1a7a462d1632b464",
       "sourceName": "@openzeppelin/contracts/token/ERC20/ERC20.sol",
       "solcConfig": {
@@ -158,7 +158,7 @@
       ]
     },
     "C:\\Users\\Mami\\BC-Pre-Tasks\\node_modules\\@openzeppelin\\contracts\\token\\ERC20\\extensions\\ERC20Burnable.sol": {
-      "lastModificationDate": 1693321892674,
+      "lastModificationDate": 1695303913173,
       "contentHash": "a1c7f80ae26f5b2d7d563475627fbf25",
       "sourceName": "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol",
       "solcConfig": {
@@ -196,7 +196,7 @@
       ]
     },
     "C:\\Users\\Mami\\BC-Pre-Tasks\\node_modules\\@openzeppelin\\contracts\\token\\ERC20\\extensions\\ERC20Snapshot.sol": {
-      "lastModificationDate": 1693321892708,
+      "lastModificationDate": 1695303913193,
       "contentHash": "d56a22fab8dacd27861e0656c740adca",
       "sourceName": "@openzeppelin/contracts/token/ERC20/extensions/ERC20Snapshot.sol",
       "solcConfig": {
@@ -235,7 +235,7 @@
       ]
     },
     "C:\\Users\\Mami\\BC-Pre-Tasks\\node_modules\\@openzeppelin\\contracts\\utils\\Context.sol": {
-      "lastModificationDate": 1693321892458,
+      "lastModificationDate": 1695303912771,
       "contentHash": "5f2c5c4b6af2dd4551027144797bc8be",
       "sourceName": "@openzeppelin/contracts/utils/Context.sol",
       "solcConfig": {
@@ -269,43 +269,8 @@
         "Context"
       ]
     },
-    "C:\\Users\\Mami\\BC-Pre-Tasks\\node_modules\\@openzeppelin\\contracts\\token\\ERC20\\IERC20.sol": {
-      "lastModificationDate": 1693321892941,
-      "contentHash": "df36f7051335cd1e748b1b6463b7fdd3",
-      "sourceName": "@openzeppelin/contracts/token/ERC20/IERC20.sol",
-      "solcConfig": {
-        "version": "0.8.9",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "IERC20"
-      ]
-    },
     "C:\\Users\\Mami\\BC-Pre-Tasks\\node_modules\\@openzeppelin\\contracts\\token\\ERC20\\extensions\\IERC20Metadata.sol": {
-      "lastModificationDate": 1693321892941,
+      "lastModificationDate": 1695303913415,
       "contentHash": "909ab67fc5c25033fe6cd364f8c056f9",
       "sourceName": "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol",
       "solcConfig": {
@@ -341,8 +306,43 @@
         "IERC20Metadata"
       ]
     },
+    "C:\\Users\\Mami\\BC-Pre-Tasks\\node_modules\\@openzeppelin\\contracts\\token\\ERC20\\IERC20.sol": {
+      "lastModificationDate": 1695303913411,
+      "contentHash": "df36f7051335cd1e748b1b6463b7fdd3",
+      "sourceName": "@openzeppelin/contracts/token/ERC20/IERC20.sol",
+      "solcConfig": {
+        "version": "0.8.9",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "IERC20"
+      ]
+    },
     "C:\\Users\\Mami\\BC-Pre-Tasks\\node_modules\\@openzeppelin\\contracts\\utils\\Arrays.sol": {
-      "lastModificationDate": 1693321892408,
+      "lastModificationDate": 1695303912739,
       "contentHash": "64b487456525f35e7e8cf06173f748a9",
       "sourceName": "@openzeppelin/contracts/utils/Arrays.sol",
       "solcConfig": {
@@ -380,7 +380,7 @@
       ]
     },
     "C:\\Users\\Mami\\BC-Pre-Tasks\\node_modules\\@openzeppelin\\contracts\\utils\\Counters.sol": {
-      "lastModificationDate": 1693321892466,
+      "lastModificationDate": 1695303912774,
       "contentHash": "74654e3ae5d7f39555055dfe244dab7a",
       "sourceName": "@openzeppelin/contracts/utils/Counters.sol",
       "solcConfig": {
@@ -415,7 +415,7 @@
       ]
     },
     "C:\\Users\\Mami\\BC-Pre-Tasks\\node_modules\\@openzeppelin\\contracts\\utils\\StorageSlot.sol": {
-      "lastModificationDate": 1693321893141,
+      "lastModificationDate": 1695303913559,
       "contentHash": "682f7dd1f2e1147c8390e7575deceb2d",
       "sourceName": "@openzeppelin/contracts/utils/StorageSlot.sol",
       "solcConfig": {
@@ -450,7 +450,7 @@
       ]
     },
     "C:\\Users\\Mami\\BC-Pre-Tasks\\node_modules\\@openzeppelin\\contracts\\utils\\math\\Math.sol": {
-      "lastModificationDate": 1693321893091,
+      "lastModificationDate": 1695303913513,
       "contentHash": "fe63409d8a06818b926cf89e0ea88b1b",
       "sourceName": "@openzeppelin/contracts/utils/math/Math.sol",
       "solcConfig": {
