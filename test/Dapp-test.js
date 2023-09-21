@@ -33,74 +33,67 @@ describe("Dapp Contract", function (){
         });
       });
 
-    describe("Contract Functions", async function(){
-        let news1, ownerStruct, news2, userStruct;
-        before (async function() {
-            const addNews = await dapp.connect(owner).addNews('url1',owner.address,bytes32);
-            await addNews.wait();
-            
-            const updateNews1 = await dapp.connect(owner).updateNews(1,200);
-            await updateNews1.wait();
-
-            const updateOwner = await dapp.connect(owner).updateUser(owner.address,200);
-            await updateOwner.wait();
-
-            const addNews2 = await dapp.connect(owner).addNews('url2',user1.address,bytes32);
-            await addNews2.wait();
-
-            const updateNews2 = await dapp.connect(owner).updateNews(2,350);
-            await updateNews2.wait();
-
-            const updateUser = await dapp.connect(owner).updateUser(user1.address,350);
-            await updateUser.wait();
-
-            const spendUserPoints = await dapp.connect(owner).spendPoints(user1.address,300)
-            await spendUserPoints.wait()
-
-            news1 = await dapp.connect(owner).news(1);
-            ownerStruct = await dapp.connect(owner).users(owner.address)
-
-            news2 = await dapp.connect(owner).news(2);
-            userStruct = await dapp.connect(owner).users(user1.address)
-            
+    describe("Add balance", async function(){
+        before(async function(){
+            const addBalance = await token.transfer(dapp.address,ethers.utils.parseEther('1000'));
+            await addBalance.wait();
         })
-        
-        it("News and users added", async function() {
-            expect(await dapp.currentNewsId()).to.equal(3);
-            expect(await dapp.currentUserId()).to.equal(3);
-        })
-        it("Fails with wrong parameters", async function() {
-             await expect( dapp.connect(owner).addNews(1,0,2)).to.be.reverted;
-        })
-        it("Updates news1", async function() {
-            expect(news1.id).to.be.equal(1);
-            expect(news1.owner).to.be.equal(owner.address);
-            expect(news1.url).to.be.equal('url1');
-            expect(news1.hash).to.be.equal(bytes32);
-            expect(news1.points).to.be.equal(200);
-        })
-        it("Updates owner", async function() {
-            expect(ownerStruct.id).to.be.equal(1);
-            expect(ownerStruct.allPoints).to.be.equal(200);
-            expect(ownerStruct.unspentPoints).to.be.equal(200);
-        })
-        it("Updates news2", async function() {
-            expect(news2.id).to.be.equal(2);
-            expect(news2.owner).to.be.equal(user1.address);
-            expect(news2.url).to.be.equal('url2');
-            expect(news2.hash).to.be.equal(bytes32);
-            expect(news2.points).to.be.equal(350);
-        })
-        it("Spends user's points", async function() {
-            expect(userStruct.id).to.be.equal(2);
-            expect(userStruct.allPoints).to.be.equal(350);
-            expect(userStruct.unspentPoints).to.be.equal(50);
-        })
-        it("Drops tokens to users account", async function() {
-            let userBalance = await token.balanceOf(user1.address);
-            await userBalance.wait();
-            expect(ethers.utils(userBalance)).to.be.equal(300/10);
+        it("Adds token balance to dapp contract", async function() {
+            let contractBalance = await token.balanceOf(dapp.address);
+            expect(ethers.utils.formatEther(contractBalance)).to.be.equal('1000.0');
         })
     })
 
+    describe("Contract Functions", async function(){
+        let news1, user;
+        before (async function() {
+            const addNews = await dapp.connect(owner).addNews('url1',user1.address,bytes32);
+            await addNews.wait();
+            
+            const updateNews = await dapp.connect(owner).updateNews(1,500);
+            await updateNews.wait();
+
+            const updateUser = await dapp.connect(owner).updateUser(user1.address,500);
+            await updateUser.wait();
+
+            news1 = await dapp.connect(owner).news(1);  
+            user = await dapp.connect(owner).users(user1.address);  
+        })
+        it("Fails with wrong parameters", async function() {
+            await expect( dapp.connect(owner).addNews(1,0,2)).to.be.reverted;
+       })
+        it("News and users added", async function() {
+            expect(await dapp.currentNewsId()).to.equal(2);
+            expect(await dapp.currentUserId()).to.equal(2);
+        })
+        it("Updates news1", async function() {
+            expect(news1.id).to.be.equal(1);
+            expect(news1.owner).to.be.equal(user1.address);
+            expect(news1.url).to.be.equal('url1');
+            expect(news1.hash).to.be.equal(bytes32);
+            expect(news1.points).to.be.equal(500);
+        })
+        it("Updates user", async function() {
+            expect(user.id).to.be.equal(1);
+            expect(user.allPoints).to.be.equal(500);
+            expect(user.unspentPoints).to.be.equal(500);
+        })
+    })
+    describe("Spends points", async function(){
+        let userStruct;
+        before(async function(){
+            const spendUserPoints = await dapp.connect(owner).spendPoints(user1.address,300);
+            await spendUserPoints.wait();
+            userStruct = await dapp.connect(owner).users(user1.address);
+        })
+        it("Spends user's points", async function() {
+            expect(userStruct.id).to.be.equal(1);
+            expect(userStruct.allPoints).to.be.equal(500);
+            expect(userStruct.unspentPoints).to.be.equal(200);
+        })
+        it("Drops tokens to users account", async function() {
+            let userBalance = await token.balanceOf(user1.address);
+            expect(ethers.utils.formatEther(userBalance)).to.be.equal('30.0');
+        })
+    })
 });

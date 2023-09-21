@@ -93,21 +93,26 @@ contract ChainewsDapp is Ownable{
         tokenAddr = newTokenAddr;
     }    
 
-    function dropTokens(address _recipient, uint256 _amount) public onlyOwner returns (bool) {
+    function dropTokens(address _recipient, uint256 _points) public onlyOwner {
         require(_recipient != address(0));
-        require(Token.transfer(_recipient, _amount* 10**18));
-        return true;
+        uint256 amount = calculateAmount(_points);
+        require(Token.transfer(_recipient, amount* 1 ether)); 
     }
 
     function withdrawTokens(address beneficiary) public onlyOwner {
         require(Token.transfer(beneficiary, Token.balanceOf(address(this))));
     }
 
+    function calculateAmount(uint256 _points) internal pure returns (uint256){
+        uint256 amount = _points/10;
+        return amount;
+    }
+
     function spendPoints (address _userAddress, uint256 _points) public onlyOwner{ // sholud spend user points and updates 
         require(users[_userAddress].unspentPoints>=_points, "Not enough points");
         User storage newUser = users[_userAddress];
         newUser.unspentPoints -= _points;
-        dropTokens(_userAddress, _points/10);
+        dropTokens(_userAddress, _points);
     }
     
 }
