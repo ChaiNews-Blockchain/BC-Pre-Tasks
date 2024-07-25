@@ -41,7 +41,7 @@ contract ChainewsDapp is Ownable{
         currentUserId = 1;
     }
 
-    function addNews(string memory _url, address _owner, bytes32 _hash) external onlyOwner{ 
+    function addNews(string memory _url, address _owner, bytes32 _hash) external { 
         News storage newNews = news[currentNewsId]; // should add news with same url, owner, hash and points
         newNews.url = _url;
         newNews.owner = _owner;
@@ -61,17 +61,22 @@ contract ChainewsDapp is Ownable{
         currentNewsId++;                          // should increase currentnewsId
     }
 
-    function updateNews( uint256 _id, uint256 _newPoints) external onlyOwner{ // should update news points
+    function updateNews( uint256 _id, uint256 _newPoints) external { // should update news points
         require(_newPoints>news[_id].points, "You have to update points with higher value than current value");
         News storage newNews = news[_id];
         newNews.points = _newPoints;
     }
 
-    function updateUser( address _userAddress,uint256 _newPoints) external onlyOwner{ // sholud update user points
-        require(_newPoints>users[_userAddress].allPoints, "You have to update points with higher value than current value");
-        User storage newUser = users[_userAddress];
-        newUser.unspentPoints += _newPoints - newUser.allPoints; 
-        newUser.allPoints = _newPoints;
+    function updateUsers( address[] memory _userAddresses, uint256[] memory _userPoints) external { // sholud update user points
+        // require(_newPoints>users[_userAddress].allPoints, "You have to update points with higher value than current value");
+
+        for (uint i=0; i<_userAddresses.length; i++) {
+            users[_userAddresses[i]].allPoints += _userPoints[i]; 
+            users[_userAddresses[i]].unspentPoints = _userPoints[i]; 
+        } 
+        // User storage newUser = users[_userAddress];
+        // newUser.unspentPoints += _newPoints - newUser.allPoints; 
+        // newUser.allPoints = _newPoints;
     }
     
     function getUserId(address _userAddress) external view returns (uint256) { 
@@ -89,30 +94,32 @@ contract ChainewsDapp is Ownable{
             return msg.sender;
     }
     
-    function updateTokenAddress(address newTokenAddr) public onlyOwner { // should update token address
+    function updateTokenAddress(address newTokenAddr) public { // should update token address
         tokenAddr = newTokenAddr;
     }    
 
-    function dropTokens(address _recipient, uint256 _points) public onlyOwner {
+    function dropTokens(address _recipient, uint256 _amount)internal {
         require(_recipient != address(0));
-        uint256 amount = calculateAmount(_points);
-        require(Token.transfer(_recipient, amount* 1 ether)); 
+        // uint256 amount = calculateAmount(_points);
+        require(Token.transfer(_recipient, _amount* 1 ether)); 
     }
 
-    function withdrawTokens(address beneficiary) public onlyOwner {
+    function withdrawTokens(address beneficiary) public onlyOwner{
         require(Token.transfer(beneficiary, Token.balanceOf(address(this))));
     }
 
-    function calculateAmount(uint256 _points) internal pure returns (uint256){
-        uint256 amount = _points/10;
-        return amount;
-    }
+    // function calculateAmount(uint256 _points) internal pure returns (uint256){
+    //     uint256 amount = _points/10;
+    //     günlüktoplampuan - userpoints
+    //     return amount;
+    // }
 
-    function spendPoints (address _userAddress, uint256 _points) public onlyOwner{ // sholud spend user points and updates 
-        require(users[_userAddress].unspentPoints>=_points, "Not enough points");
-        User storage newUser = users[_userAddress];
-        newUser.unspentPoints -= _points;
-        dropTokens(_userAddress, _points);
+    function spendPoints (uint256 _points) public { // sholud spend user points and updates 
+        require(users[msg.sender].unspentPoints>=_points, "Not enough points");
+        users[msg.sender].unspentPoints -=_points;
+        // User storage newUser = users[_userAddress];
+        // newUser.unspentPoints -= _points;
+        dropTokens(msg.sender, _points);
     }
     
 }

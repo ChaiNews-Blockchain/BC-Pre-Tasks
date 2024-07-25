@@ -18,7 +18,7 @@ describe("Dapp Contract", function (){
     })
     it("Deploys the contracts", async function() {
         expect(token.address).to.not.be.undefined;
-        expect(token.address).to.not.be.undefined;
+        expect(dapp.address).to.not.be.undefined;
     })
 
     describe("Deployment", function () {

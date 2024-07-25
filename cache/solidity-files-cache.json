@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "C:\\Users\\Mami\\BC-Pre-Tasks\\Contracts\\ChainewsDapp.sol": {
-      "lastModificationDate": 1695298105234,
-      "contentHash": "df551370aab87c45e0cdcfeb82a3a574",
+      "lastModificationDate": 1698070688138,
+      "contentHash": "5ac9991a3d1b5914a9ca82217c92cc63",
       "sourceName": "Contracts/ChainewsDapp.sol",
       "solcConfig": {
         "version": "0.8.9",
@@ -269,6 +269,41 @@
         "Context"
       ]
     },
+    "C:\\Users\\Mami\\BC-Pre-Tasks\\node_modules\\@openzeppelin\\contracts\\token\\ERC20\\IERC20.sol": {
+      "lastModificationDate": 1695303913411,
+      "contentHash": "df36f7051335cd1e748b1b6463b7fdd3",
+      "sourceName": "@openzeppelin/contracts/token/ERC20/IERC20.sol",
+      "solcConfig": {
+        "version": "0.8.9",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "IERC20"
+      ]
+    },
     "C:\\Users\\Mami\\BC-Pre-Tasks\\node_modules\\@openzeppelin\\contracts\\token\\ERC20\\extensions\\IERC20Metadata.sol": {
       "lastModificationDate": 1695303913415,
       "contentHash": "909ab67fc5c25033fe6cd364f8c056f9",
@@ -304,41 +339,6 @@
       ],
       "artifacts": [
         "IERC20Metadata"
-      ]
-    },
-    "C:\\Users\\Mami\\BC-Pre-Tasks\\node_modules\\@openzeppelin\\contracts\\token\\ERC20\\IERC20.sol": {
-      "lastModificationDate": 1695303913411,
-      "contentHash": "df36f7051335cd1e748b1b6463b7fdd3",
-      "sourceName": "@openzeppelin/contracts/token/ERC20/IERC20.sol",
-      "solcConfig": {
-        "version": "0.8.9",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "IERC20"
       ]
     },
     "C:\\Users\\Mami\\BC-Pre-Tasks\\node_modules\\@openzeppelin\\contracts\\utils\\Arrays.sol": {
