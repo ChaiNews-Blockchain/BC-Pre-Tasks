@@ -1,3 +1,73 @@
-node_modules
+# Node.js dependencies
+node_modules/
+
+# Hardhat files
+cache/
+artifacts/
+
+# Optional npm cache directory
+.npm/
+
+# Optional Yarn cache directory
+.yarn/
+.yarn/cache
+
+# dotenv environment variables file
 .env
-artifacts
+.env.local
+.env.*.local
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor directories and files
+.idea/
+.vscode/
+*.sublime-workspace
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+Thumbs.db
+
+# Dependency directories
+jspm_packages/
+
+# Output of 'npm pack'
+*.tgz
+
+# Optional eslint cache
+.eslintcache
+
+# Optional stylelint cache
+.stylelintcache
+
+# Optional REPL history
+.node_repl_history
+
+# Coverage directory used by tools like istanbul
+coverage/
+
+# nyc test coverage
+.nyc_output/
+
+# Compiled binary addons (https://nodejs.org/api/addons.html)
+build/Release
+
+# Parcel-bundler cache (https://parceljs.org/)
+.parcel-cache/
+
+# macOS specific
+.AppleDouble
+.LSOverride
+
+secrets.json
