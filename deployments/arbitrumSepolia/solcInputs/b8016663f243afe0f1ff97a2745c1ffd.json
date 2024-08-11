@@ -1,0 +1,48 @@
+{
+  "language": "Solidity",
+  "sources": {
+    "contracts/chainewsToken.sol": {
+      "content": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.20;\n\nimport \"./interfaces/IERC20.sol\";\nimport \"./interfaces/IERC20Burnable.sol\";\nimport \"./interfaces/IERC20Pausable.sol\";\nimport \"./interfaces/IOwnable.sol\";\n\ncontract ChainewsToken is IERC20, IERC20Burnable, IERC20Pausable, IOwnable {\n    string public name = \"ChainewsToken\";\n    string public symbol = \"CWT\";\n    uint8 public decimals = 18;\n    uint256 private _totalSupply;\n    bool private _paused;\n\n    uint256 private constant INITIAL_SUPPLY = 1000000 * 10**18;\n    uint256 public constant MAX_SUPPLY = 2000000 * 10**18; // Maximum supply limit\n\n    mapping(address => uint256) private _balances;\n    mapping(address => mapping(address => uint256)) private _allowances;\n    address private _contractOwner;\n\n    modifier onlyOwner() {\n        require(msg.sender == _contractOwner, \"Not the contract owner\");\n        _;\n    }\n\n    modifier whenNotPaused() {\n        require(!_paused, \"Token is paused\");\n        _;\n    }\n\n    modifier whenPaused() {\n        require(_paused, \"Token is not paused\");\n        _;\n    }\n\n    constructor(address initialOwner) {\n        _contractOwner = initialOwner;\n        _mint(initialOwner, INITIAL_SUPPLY);\n        emit OwnershipTransferred(address(0), initialOwner);\n    }\n\n    // IERC20 implementation\n    function totalSupply() external view override returns (uint256) {\n        return _totalSupply;\n    }\n\n    function balanceOf(address account) external view override returns (uint256) {\n        return _balances[account];\n    }\n\n    function transfer(address recipient, uint256 amount) external override whenNotPaused returns (bool) {\n        _transfer(msg.sender, recipient, amount);\n        return true;\n    }\n\n    function allowance(address tokenOwner, address spender) external view override returns (uint256) {\n        return _allowances[tokenOwner][spender];\n    }\n\n    function approve(address spender, uint256 amount) external override whenNotPaused returns (bool) {\n        _approve(msg.sender, spender, amount);\n        return true;\n    }\n\n    function transferFrom(address sender, address recipient, uint256 amount) external override whenNotPaused returns (bool) {\n        _transfer(sender, recipient, amount);\n        _approve(sender, msg.sender, _allowances[sender][msg.sender] - amount);\n        return true;\n    }\n\n    // IERC20Burnable implementation\n    function burn(uint256 amount) external override whenNotPaused {\n        _burn(msg.sender, amount);\n    }\n\n    function burnFrom(address account, uint256 amount) external override whenNotPaused {\n        uint256 decreasedAllowance = _allowances[account][msg.sender] - amount;\n        _approve(account, msg.sender, decreasedAllowance);\n        _burn(account, amount);\n    }\n\n    // IERC20Pausable implementation\n    function paused() external view override returns (bool) {\n        return _paused;\n    }\n\n    function pause() external override onlyOwner whenNotPaused {\n        _paused = true;\n        emit Paused(msg.sender);\n    }\n\n    function unpause() external override onlyOwner whenPaused {\n        _paused = false;\n        emit Unpaused(msg.sender);\n    }\n\n    // IOwnable implementation\n    function owner() external view override returns (address) {\n        return _contractOwner;\n    }\n\n    function transferOwnership(address newOwner) external override onlyOwner {\n        require(newOwner != address(0), \"New owner is the zero address\");\n        emit OwnershipTransferred(_contractOwner, newOwner);\n        _contractOwner = newOwner;\n    }\n\n    // Public mint function\n    function mint(address account, uint256 amount) external onlyOwner whenNotPaused {\n        require(_totalSupply + amount <= MAX_SUPPLY, \"Minting would exceed max supply\");\n        _mint(account, amount);\n    }\n\n    // Internal functions\n    function _beforeTokenTransfer(address /*from*/, address /*to*/, uint256 /*amount*/) internal view {\n        require(!_paused, \"Token transfer while paused\");\n    }\n\n    function _transfer(address sender, address recipient, uint256 amount) internal {\n        require(sender != address(0), \"Transfer from the zero address\");\n        require(recipient != address(0), \"Transfer to the zero address\");\n\n        _beforeTokenTransfer(sender, recipient, amount);\n\n        _balances[sender] -= amount;\n        _balances[recipient] += amount;\n        emit Transfer(sender, recipient, amount);\n    }\n\n    function _mint(address account, uint256 amount) internal {\n        require(account != address(0), \"Mint to the zero address\");\n\n        _beforeTokenTransfer(address(0), account, amount);\n\n        _totalSupply += amount;\n        _balances[account] += amount;\n        emit Transfer(address(0), account, amount);\n    }\n\n    function _burn(address account, uint256 amount) internal {\n        require(account != address(0), \"Burn from the zero address\");\n\n        _beforeTokenTransfer(account, address(0), amount);\n\n        _balances[account] -= amount;\n        _totalSupply -= amount;\n        emit Transfer(account, address(0), amount);\n    }\n\n    function _approve(address tokenOwner, address spender, uint256 amount) internal {\n        require(tokenOwner != address(0), \"Approve from the zero address\");\n        require(spender != address(0), \"Approve to the zero address\");\n\n        _allowances[tokenOwner][spender] = amount;\n        emit Approval(tokenOwner, spender, amount);\n    }\n}\n"
+    },
+    "contracts/interfaces/IERC20.sol": {
+      "content": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.20;\n\n\ninterface IERC20 {\n    function totalSupply() external view returns (uint256);\n    function balanceOf(address account) external view returns (uint256);\n    function transfer(address recipient, uint256 amount) external returns (bool);\n    function allowance(address owner, address spender) external view returns (uint256);\n    function approve(address spender, uint256 amount) external returns (bool);\n    function transferFrom(address sender, address recipient, uint256 amount) external returns (bool);\n\n    event Transfer(address indexed from, address indexed to, uint256 value);\n    event Approval(address indexed owner, address indexed spender, uint256 value);\n}"
+    },
+    "contracts/interfaces/IERC20Burnable.sol": {
+      "content": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.20;\n\ninterface IERC20Burnable {\n    function burn(uint256 amount) external;\n    function burnFrom(address account, uint256 amount) external;\n}\n"
+    },
+    "contracts/interfaces/IERC20Pausable.sol": {
+      "content": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.20;\n\ninterface IERC20Pausable {\n    function paused() external view returns (bool);\n    function pause() external;\n    function unpause() external;\n\n    event Paused(address account);\n    event Unpaused(address account);\n}\n"
+    },
+    "contracts/interfaces/IOwnable.sol": {
+      "content": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.20;\n\ninterface IOwnable {\n    function owner() external view returns (address);\n    function transferOwnership(address newOwner) external;\n\n    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);\n}\n"
+    }
+  },
+  "settings": {
+    "evmVersion": "paris",
+    "optimizer": {
+      "enabled": false,
+      "runs": 200
+    },
+    "outputSelection": {
+      "*": {
+        "*": [
+          "abi",
+          "evm.bytecode",
+          "evm.deployedBytecode",
+          "evm.methodIdentifiers",
+          "metadata",
+          "devdoc",
+          "userdoc",
+          "storageLayout",
+          "evm.gasEstimates"
+        ],
+        "": [
+          "ast"
+        ]
+      }
+    },
+    "metadata": {
+      "useLiteralContent": true
+    }
+  }
+}
